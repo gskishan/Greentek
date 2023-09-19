@@ -121,8 +121,8 @@ app_license = "MIT"
 
 doc_events = {
 	"Quotation": {
-		"refresh":"greentech.greentek.custom.quotation.refresh"
-		# "autoname":"greentech.greentek.custom.quotation.autoname"
+		"refresh":"greentek.greentek.custom.quotation.refresh"
+		#"refresh":"greentek.greentek.custom.quotation.refresh"
 
 		
 	}
