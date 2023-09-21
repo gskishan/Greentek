@@ -8,25 +8,13 @@ from frappe.utils import cint, get_fullname
 from erpnext.accounts.party import get_party_account_currency
 from erpnext.setup.utils import get_exchange_rate
 from erpnext.utilities.transaction_base import TransactionBase
-# from erpnext.crm.doctype.quotation.quotation import *
 import datetime
+from frappe.model.naming import make_autoname
 
-# class Quotation(Quotation):
+def autoname(doc,method):
+    fiscal_year = frappe.db.sql(""" Select name from `tabFiscal Year` WHERE %(posting_date)s between year_start_date and year_end_date """, {"posting_date":doc.posting_date}, as_dict=True,)
+    if doc.company ="Greentek Global Ventures Limited":
+        doc.name = make_autoname('GGVL-' + fiscal_year[0].get('name') + '-.#####')
+    elif doc.company="ACETEK MEP SOLUTIONS":
+        doc.name = make_autoname('AMS-' + fiscal_year[0].get('name') + '-.#####')
     
-def refresh(self,Methods):
-
-    if self.naming_series != "CRM-OPP-.YYYY.-":
-        if self.naming_series == "D.{company}..YY..#######":
-            doc = frappe.db.get_list("Quotation", filters=[[ "naming_series", 'NOT IN', ['CRM-OPP-.YYYY.-']]])
-            print(len(doc))
-            doc1 = frappe.db.get_list("Quotation", filters=[[ "naming_series", 'IN', ["D.{company}..YY..#######"]]])
-            total_len =len(doc1)
-            print(total_len+1)
-            print(self.name)
-            #print(doc)
-            length=str(len(doc1)+1).zfill(6)
-            date=self.date
-            date = datetime.datetime.strptime(date, '%Y-%m-%d')
-            date=date.strftime("%y")
-
-            self.name = "D" + self.company + str(date) + str(length)
